@@ -7,13 +7,12 @@ function getItemDetail(barcode, allItemsList) {
 function decodeItemList(inputs) {
     const allItemsList = loadAllItems();
     return inputs.reduce(function (orderedItems, barcode) {
-        let itemDetail = getItemDetail(barcode, allItemsList);
         let data = orderedItems.find(item => item.barcode == barcode);
         if (data) {
             data.quantity++;
-            data.unit = (data.quantity == 2) ? data.unit + "s" : data.unit;
         }
-        else
+        else {
+            let itemDetail = getItemDetail(barcode, allItemsList);
             orderedItems.push({
                 barcode: itemDetail.barcode,
                 name: itemDetail.name,
@@ -21,6 +20,7 @@ function decodeItemList(inputs) {
                 unitPrice: itemDetail.price,
                 quantity: 1
             });
+        }
         return orderedItems;
     }, []);
 }
@@ -46,7 +46,7 @@ function generateItemSummary(detailItemList) {
 }
 
 function formatItemSummary(itemSummary) {
-    return "Name：" + itemSummary.name + "，Quantity：" + itemSummary.quantity + " " + itemSummary.unit
+    return "Name：" + itemSummary.name + "，Quantity：" + itemSummary.quantity + " " + ((itemSummary.quantity > 1) ? itemSummary.unit + "s" : itemSummary.unit)
         + "，Unit：" + itemSummary.unitPrice.toFixed(2) + " (yuan)，Subtotal：" + itemSummary.subTotalPrice.toFixed(2)
         + " (yuan)\n";
 }
