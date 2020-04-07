@@ -46,9 +46,7 @@ function generateItemSummary(detailItemList) {
 }
 
 function formatItemSummary(itemSummary) {
-    return "Name：" + itemSummary.name + "，Quantity：" + itemSummary.quantity + " " + ((itemSummary.quantity > 1) ? itemSummary.unit + "s" : itemSummary.unit)
-        + "，Unit：" + itemSummary.unitPrice.toFixed(2) + " (yuan)，Subtotal：" + itemSummary.subTotalPrice.toFixed(2)
-        + " (yuan)\n";
+    return `Name：${itemSummary.name}，Quantity：${itemSummary.quantity} ${itemSummary.unit}${((itemSummary.quantity > 1) ? 's' : '')}，Unit：${itemSummary.unitPrice.toFixed(2)} (yuan)，Subtotal：${itemSummary.subTotalPrice.toFixed(2)} (yuan)\n`;
 }
 
 function formatReceipt(itemSummaryList) {
@@ -56,7 +54,7 @@ function formatReceipt(itemSummaryList) {
     itemSummaryList.itemSubSummaryList.forEach(itemSummary => {
         return receiptString += formatItemSummary(itemSummary);
     })
-    receiptString += "----------------------\nTotal：" + itemSummaryList.totalPrice.toFixed(2) + " (yuan)\n**********************";
+    receiptString += `----------------------\nTotal：${itemSummaryList.totalPrice.toFixed(2)} (yuan)\n**********************`;
     return receiptString;
 }
 
